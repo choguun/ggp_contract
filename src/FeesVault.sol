@@ -2,7 +2,7 @@
 pragma solidity 0.8.24;
 
 import {Ownable} from "openzeppelin-contracts/contracts/access/Ownable.sol";
-imoprt {GP} from "./GP.sol";
+import {GP} from "./GP.sol";
 
 contract FeesVault is Ownable {
 
