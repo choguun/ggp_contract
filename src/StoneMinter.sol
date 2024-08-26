@@ -6,7 +6,7 @@ import {Ownable} from "openzeppelin-contracts/contracts/access/Ownable.sol";
 import {StakeStoneDummy} from "./StakeStoneDummy.sol";
 import {StoneVault} from "./StoneVault.sol";
 
-contract StoneMinter {
+contract StoneMinter is Ownable {
     // External contracts
     address public stone;
     address payable public vault;
@@ -17,9 +17,8 @@ contract StoneMinter {
         _;
     }
 
-    constructor(address _stone, address payable _vault) {
+    constructor(address _stone) Ownable(_msgSender()) {
         stone = _stone;
-        vault = _vault;
     }
 
     function mint(address _to, uint256 _amount) external onlyVault {
@@ -30,7 +29,7 @@ contract StoneMinter {
         StakeStoneDummy(stone).burn(_from, _amount);
     }
 
-    function setNewVault(address _vault) external onlyVault {
+    function setNewVault(address _vault) external onlyOwner {
         vault = payable(_vault);
     }
 }

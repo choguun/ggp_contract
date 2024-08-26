@@ -75,7 +75,7 @@ contract World is Ownable {
             // Sell the item
             require(Item(item).balanceOf(_msgSender(), _itemId) > 0, "Insufficient item");
             Item(item).burn(_msgSender(), _itemId, 1);
-            GGP(ggp).transfer(_msgSender(), (price * (100 - marketfees)) / 100);
+            GGP(ggp).transfer(_msgSender(), (price * (100 - (marketfees + platformfees))) / 100);
         }
     }
 

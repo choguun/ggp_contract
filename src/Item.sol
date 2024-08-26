@@ -11,7 +11,7 @@ contract Item is ERC1155, Ownable {
 
     address public world;
 
-    constructor( address _world) 
+    constructor(address _world) 
     ERC1155("")
     Ownable(_msgSender())
     {

@@ -2,13 +2,14 @@
 pragma solidity 0.8.24;
 
 import {ERC20} from "solmate/tokens/ERC20.sol";
+import {Ownable} from "openzeppelin-contracts/contracts/access/Ownable.sol";
 
-contract StakeStoneDummy is ERC20 {
+contract StakeStoneDummy is ERC20, Ownable {
     // External contracts
     address public minter;
     // External contracts
 
-    constructor() ERC20("StakeStoneDummy", "StakeStoneDummy", 18) {}
+    constructor() ERC20("StakeStoneDummy", "StakeStoneDummy", 18) Ownable(_msgSender()) {}
 
     modifier onlyMinter() {
         require(msg.sender == minter, "not vault");
@@ -21,5 +22,9 @@ contract StakeStoneDummy is ERC20 {
 
     function burn(address _from, uint256 _amount) public onlyMinter {
         _burn(_from, _amount);
+    }
+
+    function setNewMinter(address _minter) external onlyOwner {
+        minter = _minter;
     }
 }
