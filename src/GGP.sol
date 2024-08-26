@@ -7,13 +7,13 @@ import {SafeERC20} from "openzeppelin-contracts/contracts/token/ERC20/utils/Safe
 import {Ownable} from "openzeppelin-contracts/contracts/access/Ownable.sol";
 import {IERC4626} from "./IERC4626.sol";
 
-contract GP is ERC20, IERC4626, Ownable {
+contract GGP is ERC20, IERC4626, Ownable {
     using SafeERC20 for IERC20;
 
     IERC20 private _asset;
 
     constructor(IERC20 asset) Ownable(_msgSender())
-        ERC20("Game Point", "GP")
+        ERC20("Good Game Point", "GGP")
     {
         _asset = asset;
     }

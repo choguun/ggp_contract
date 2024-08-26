@@ -3,7 +3,7 @@ pragma solidity 0.8.24;
 
 import {Ownable} from "openzeppelin-contracts/contracts/access/Ownable.sol";
 
-import {GP} from "./GP.sol";
+import {GGP} from "./GGP.sol";
 import {Item} from "./Item.sol";
 import {FeesVault} from "./FeesVault.sol";
 
@@ -25,7 +25,7 @@ contract World is Ownable {
     // World State
 
     // External contracts
-    address public gp;
+    address public ggp;
     address public item;
     address public feesVault;
     // External contracts
@@ -41,8 +41,8 @@ contract World is Ownable {
     // constructor
 
     // config
-    function config(address _gp, address _item, address _feesVault) external onlyOwner {
-        gp = _gp;
+    function config(address _ggp, address _item, address _feesVault) external onlyOwner {
+        ggp = _ggp;
         item = _item;
         feesVault = _feesVault;
     }
@@ -66,16 +66,16 @@ contract World is Ownable {
         uint256 price = _getItemPrice(_itemId);
         if(_exchangeType == ExchangeType.BUY) {
             // Buy the item
-            require(GP(gp).balanceOf(_msgSender()) >= price, "Insufficient balance");
-            GP(gp).approve(address(this), price);
-            GP(gp).transferFrom(_msgSender(), address(this), price);
-            GP(gp).transfer(feesVault, (price * platformfees) / 100);
+            require(GGP(ggp).balanceOf(_msgSender()) >= price, "Insufficient balance");
+            GGP(ggp).approve(address(this), price);
+            GGP(ggp).transferFrom(_msgSender(), address(this), price);
+            GGP(ggp).transfer(feesVault, (price * platformfees) / 100);
             Item(item).mint(_msgSender(), _itemId, 1);
         } else {
             // Sell the item
             require(Item(item).balanceOf(_msgSender(), _itemId) > 0, "Insufficient item");
             Item(item).burn(_msgSender(), _itemId, 1);
-            GP(gp).transfer(_msgSender(), (price * (100 - marketfees)) / 100);
+            GGP(ggp).transfer(_msgSender(), (price * (100 - marketfees)) / 100);
         }
     }
 
@@ -84,7 +84,7 @@ contract World is Ownable {
     }
     // player function
 
-     // admin functions
+    // admin functions
     function createItem(uint16 _itemId, string memory _name, string memory _description, uint256 _price) public onlyOwner {
         items[_itemId] = GameItem(_name, _description, _price);
         emit GameItemCreated(_itemId, _price, block.timestamp);
