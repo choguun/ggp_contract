@@ -11,6 +11,7 @@ contract GGP is ERC20, IERC4626, Ownable {
     using SafeERC20 for IERC20;
 
     IERC20 private _asset;
+    uint256 public constant FIXED_CONVERSION_RATE = 100; // 1 StakeStone = 100 tokens
 
     constructor(IERC20 asset) Ownable(_msgSender())
         ERC20("Good Game Point", "GGP")
@@ -19,13 +20,7 @@ contract GGP is ERC20, IERC4626, Ownable {
     }
 
     function deposit(uint256 assets, address receiver) external override returns (uint256 shares) {
-        uint256 totalAssets = totalAssets();
-        uint256 totalShares = totalSupply();
-        if (totalShares == 0) {
-            shares = assets;
-        } else {
-            shares = (assets * totalShares) / totalAssets;
-        }
+        shares = assets * FIXED_CONVERSION_RATE;
 
         _asset.safeTransferFrom(msg.sender, address(this), assets);
         _mint(receiver, shares);
@@ -34,10 +29,7 @@ contract GGP is ERC20, IERC4626, Ownable {
     }
 
     function withdraw(uint256 assets, address receiver, address owner) external override returns (uint256 shares) {
-        uint256 totalAssets = totalAssets();
-        uint256 totalShares = totalSupply();
-
-        shares = (assets * totalShares) / totalAssets;
+        assets = shares / FIXED_CONVERSION_RATE;
 
         if (msg.sender != owner) {
             uint256 currentAllowance = allowance(owner, msg.sender);
@@ -48,7 +40,7 @@ contract GGP is ERC20, IERC4626, Ownable {
         _burn(owner, shares);
         _asset.safeTransfer(receiver, assets);
 
-        return shares;
+        return assets;
     }
 
     function totalAssets() public view override returns (uint256) {

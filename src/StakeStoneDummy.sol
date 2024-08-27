@@ -17,6 +17,9 @@ contract StakeStoneDummy is ERC20, Ownable {
     }
 
     function mint(address _to, uint256 _amount) public onlyMinter {
+        require(_to != address(0), "Cannot mint to zero address");
+        require(_amount > 0, "Amount should be greater than zero");
+        
         _mint(_to, _amount);
     }
 

@@ -17,7 +17,8 @@ contract StoneVault {
     
     function mint(address _to, uint256 _amount) external {
         require(ETHDummy(eth).balanceOf(msg.sender) >= _amount, "not enough balance");
-        ETHDummy(eth).approve(address(this), _amount);
+        require(ETHDummy(eth).approve(address(this), _amount));
+        
         ETHDummy(eth).transferFrom(msg.sender, address(this), _amount);
 
         StoneMinter(minter).mint(_to, _amount);
