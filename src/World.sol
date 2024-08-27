@@ -67,7 +67,8 @@ contract World is Ownable {
         if(_exchangeType == ExchangeType.BUY) {
             // Buy the item
             require(GGP(ggp).balanceOf(_msgSender()) >= price, "Insufficient balance");
-            GGP(ggp).approve(address(this), price);
+            require(GGP(ggp).approve(address(this), price), "Approve failed");
+            
             GGP(ggp).transferFrom(_msgSender(), address(this), price);
             GGP(ggp).transfer(feesVault, (price * platformfees) / 100);
             Item(item).mint(_msgSender(), _itemId, 1);
@@ -89,11 +90,6 @@ contract World is Ownable {
         items[_itemId] = GameItem(_name, _description, _price);
         emit GameItemCreated(_itemId, _price, block.timestamp);
         itemCount++;
-    }
-
-    function setItemPrice(uint16 _itemId, string memory _name, string memory _description, uint256 _price) public onlyOwner {
-        items[_itemId] = GameItem(_name, _description, _price);
-        emit GameItemCreated(_itemId, _price, block.timestamp);
     }
     // admin functions
 }
