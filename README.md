@@ -1,8 +1,8 @@
 ### Vision
-Sustain GameFi economic backed by StakeStone
+Sustain GameFi economic backed by StakeStone or LST
 
 ### Description
-Good Game Points is an in-game token(ERC4626 & ERC20) designed to sustain the GameFi economy within Voxelverses. Backed by StakeStone, GGP aims to address the key challenges faced by traditional GameFi projects by creating a sustainable and long-term economic model.
+Good Game Points is an in-game token(ERC4626 & ERC20) designed to sustain the GameFi economy within Voxelverses. Backed by StakeStone or LST, GGP aims to address the key challenges faced by traditional GameFi projects by creating a sustainable and long-term economic model.
 
 ### Problems of GameFi:
 1. Unsustainable Game Economics: Many GameFi projects suffer from unstable and unsustainable economic models, leading to inflation or deflation of in-game assets.
