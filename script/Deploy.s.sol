@@ -52,6 +52,8 @@ contract Deploy is Script {
     stakeStone.setNewMinter(address(stoneMinter));
     stoneMinter.setNewVault(address(stoneVault));
 
+    world.config(address(ggp), address(item), address(feesVault));
+
     world.createItem(0, "NORMAL PICKAXE", "NORMAL PICKAXE", 100);
     world.createItem(1, "METAL PICKAXE", "METAL PICKAXE", 250);
     world.createItem(2, "GOLDEN PICKAXE", "GOLDEN PICKAXE", 600);
